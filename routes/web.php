@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ReservationController::class, 'index'])->name('reservation');
-Route::post('/guardar-reservacion', [ReservationController::class, 'saveReservation'])->name('save-reservation');
+Route::get('/crear-reservasion', [ReservationController::class, 'create'])->name('create-reservation');
+Route::post('/guardar-reservacion', [ReservationController::class, 'store'])->name('save-reservation');
 Route::post('/obtener-cliente', [ReservationController::class, 'getDataCustomer'])->name('get-customer');
 Route::get('/guardado-satisfactorio', function () {
     return view('reservation.success');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Jobs\SendEmail;
 use App\Models\Customer;
 use App\Models\Sex;
@@ -13,7 +14,7 @@ class ReservationController extends Controller
     /**
      * 
      */
-    public function index()
+    public function create()
     {
         $sexes = Sex::all();
         $type_pets = TypePet::all();
@@ -24,24 +25,8 @@ class ReservationController extends Controller
     /**
      * Save form reservation
      */
-    public function saveReservation(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $request->validate([
-            'customer.first_name' => 'required',
-            'customer.last_name' => 'required',
-            'customer.document' => 'required|max:10',
-            'customer.email' => 'required|email',
-            'customer.phone' => 'max:10',
-            'customer.mobile_phone' => 'required|max:10',
-            'pet.name' => 'required',
-            'pet.breed' => 'required',
-            'pet.age' => 'required|numeric',
-            'reservation.entry_date' => 'required|date',
-            'reservation.release_date' => 'required|date',
-            'reservation.mobility' => 'required',
-            'reservation.observation' => 'required',
-        ]);
-
         $customer = Customer::where('document', $request->all()['customer']['document'])->first();
         
         (is_null($customer)) && $customer = Customer::create($request->all()['customer']);        
